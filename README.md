@@ -8,6 +8,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 |---------|-------|------------------|
 | `tp_1/` | Types, variables et constantes | Déclaration explicite, inférence (`:=`), constantes, `iota`, zero values, conversion de type |
 | `tp_2/` | Fonctions variadiques et retours multiples | `...type`, retours multiples, gestion d'erreurs avec `error`, filtrage de données |
+| `tp_3/` | Slices, Maps et performance | Slices (`append`, `len`, `cap`), Maps, structs, indexation par catégorie, benchmark avec/sans pré-allocation, `sort.Slice`, `iota` |
 
 ## Autres
 
