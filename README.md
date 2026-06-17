@@ -10,6 +10,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `tp_2/` | Fonctions variadiques et retours multiples | `...type`, retours multiples, gestion d'erreurs avec `error`, filtrage de données |
 | `tp_3/` | Slices, Maps et performance | Slices (`append`, `len`, `cap`), Maps, structs, indexation par catégorie, benchmark avec/sans pré-allocation, `sort.Slice` |
 | `tp_4/` | Structs et méthodes | Structs, méthodes, receivers (valeur vs pointeur), `String()`, constructeurs avec validation, `math` |
+| `tp_5/` | Interfaces et interface vide | Interfaces, implémentation implicite, polymorphisme, `interface{}`, type switch, assertions de type |
 
 ## Autres
 
