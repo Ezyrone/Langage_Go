@@ -11,6 +11,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `tp_3_exo_2c/` | Slices, Maps et performance | Slices (`append`, `len`, `cap`), Maps, structs, indexation par catégorie, benchmark avec/sans pré-allocation, `sort.Slice` |
 | `tp_4_exo_3a/` | Structs et méthodes | Structs, méthodes, receivers (valeur vs pointeur), `String()`, constructeurs avec validation, `math` |
 | `tp_5_exo_3b/` | Interfaces et interface vide | Interfaces, implémentation implicite, polymorphisme, `interface{}`, type switch, assertions de type |
+| `tp_6_exo_4a/` | Goroutines et synchronisation | Goroutines, `sync.WaitGroup`, canaux (`chan`), pool de travailleurs, concurrence |
 
 ## Autres
 
