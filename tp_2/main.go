@@ -71,8 +71,8 @@ func AnalyzeSensorData(readings ...float64) (float64, float64, float64, int, int
 }
 
 func main() {
-	// ===== Exercise 1 =====
-	fmt.Println("=== Exercise 1: Basic Stats ===")
+
+	fmt.Println("Exercise 1")
 
 	sum, count, average := ComputeBasicStats(10, 20, 30, 40)
 	fmt.Printf("Sum: %d, Count: %d, Average: %.2f\n", sum, count, average)
@@ -83,8 +83,7 @@ func main() {
 	sumOne, countOne, averageOne := ComputeBasicStats(42)
 	fmt.Printf("Sum (single): %d, Count (single): %d, Average (single): %.2f\n", sumOne, countOne, averageOne)
 
-	// ===== Exercise 2 =====
-	fmt.Println("\n=== Exercise 2: Full Stats ===")
+	fmt.Println("Exercise 2")
 
 	min, max, total, avg, cnt, err := ComputeFullStats(1.5, 2.8, 0.7, 3.1)
 	if err != nil {
@@ -98,8 +97,7 @@ func main() {
 		fmt.Println("Error for empty arguments:", errEmpty)
 	}
 
-	// ===== Exercise 3 =====
-	fmt.Println("\n=== Exercise 3: Sensor Data Analysis ===")
+	fmt.Println("Exercise 3")
 
 	minTemp, maxTemp, avgTemp, validCnt, invalidCnt, errSensor := AnalyzeSensorData(22.5, 23.1, -5.0, 101.0, 21.9, 0.0, 24.0)
 	if errSensor != nil {
