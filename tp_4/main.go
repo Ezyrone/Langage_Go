@@ -6,10 +6,6 @@ import (
 	"math"
 )
 
-// =====================================================
-// Exercice 1 : Point 2D et Rectangle
-// =====================================================
-
 type Point struct {
 	X float64
 	Y float64
@@ -40,7 +36,6 @@ func (r Rectangle) Perimeter() float64 {
 	return 2 * (r.Width() + r.Height())
 }
 
-// Receiver pointeur : Move modifie le rectangle en place
 func (r *Rectangle) Move(dx, dy float64) {
 	r.Min.X += dx
 	r.Min.Y += dy
@@ -52,10 +47,6 @@ func (r Rectangle) String() string {
 	return fmt.Sprintf("Rectangle[Min(%.2f, %.2f) Max(%.2f, %.2f)] largeur=%.2f, hauteur=%.2f",
 		r.Min.X, r.Min.Y, r.Max.X, r.Max.Y, r.Width(), r.Height())
 }
-
-// =====================================================
-// Exercice 2 : Cercle
-// =====================================================
 
 type Circle struct {
 	Center Point
@@ -79,10 +70,6 @@ func (c Circle) String() string {
 	return fmt.Sprintf("Cercle[centre(%.2f, %.2f), rayon=%.2f]", c.Center.X, c.Center.Y, c.Radius)
 }
 
-// =====================================================
-// Exercice 3 : Constructeurs avec validation
-// =====================================================
-
 func NewRectangle(min, max Point) (Rectangle, error) {
 	if max.X-min.X <= 0 || max.Y-min.Y <= 0 {
 		return Rectangle{}, errors.New("les dimensions du rectangle doivent être positives")
@@ -96,10 +83,6 @@ func NewCircle(center Point, radius float64) (Circle, error) {
 	}
 	return Circle{Center: center, Radius: radius}, nil
 }
-
-// =====================================================
-// Main
-// =====================================================
 
 func main() {
 
