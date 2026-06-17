@@ -12,4 +12,4 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 
 ## Autres
 
-- `hello/` — Hello World avec module externe (`greetings`)
+- `training_go/` — Brouillons et tests perso (hello world, module greetings, etc.)
