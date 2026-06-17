@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "training",
         "readme",
-        "project"
+        "project",
+        "main"
     ]
 }
