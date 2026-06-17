@@ -5,7 +5,6 @@ import (
 	"fmt"
 )
 
-// Exercise 1
 func ComputeBasicStats(numbers ...int) (int, int, float64) {
 	if len(numbers) == 0 {
 		return 0, 0, 0.0
@@ -22,7 +21,6 @@ func ComputeBasicStats(numbers ...int) (int, int, float64) {
 	return sum, count, average
 }
 
-// Exercise 2
 func ComputeFullStats(numbers ...float64) (float64, float64, float64, float64, int, error) {
 	if len(numbers) == 0 {
 		return 0, 0, 0, 0, 0, errors.New("no arguments provided")
@@ -48,7 +46,6 @@ func ComputeFullStats(numbers ...float64) (float64, float64, float64, float64, i
 	return min, max, sum, average, count, nil
 }
 
-// Exercise 3
 func AnalyzeSensorData(readings ...float64) (float64, float64, float64, int, int, error) {
 	var valid []float64
 	invalid := 0
@@ -83,7 +80,7 @@ func main() {
 	sumOne, countOne, averageOne := ComputeBasicStats(42)
 	fmt.Printf("Sum (single): %d, Count (single): %d, Average (single): %.2f\n", sumOne, countOne, averageOne)
 
-	fmt.Println("Exercise 2")
+	fmt.Println("\n Exercise 2")
 
 	min, max, total, avg, cnt, err := ComputeFullStats(1.5, 2.8, 0.7, 3.1)
 	if err != nil {
@@ -97,7 +94,7 @@ func main() {
 		fmt.Println("Error for empty arguments:", errEmpty)
 	}
 
-	fmt.Println("Exercise 3")
+	fmt.Println("\n Exercise 3")
 
 	minTemp, maxTemp, avgTemp, validCnt, invalidCnt, errSensor := AnalyzeSensorData(22.5, 23.1, -5.0, 101.0, 21.9, 0.0, 24.0)
 	if errSensor != nil {
