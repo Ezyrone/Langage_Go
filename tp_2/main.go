@@ -5,35 +5,35 @@ import (
 	"fmt"
 )
 
-// Exercice 1
-func CalculerStatistiquesBase(nombres ...int) (int, int, float64) {
-	if len(nombres) == 0 {
+// Exercise 1
+func ComputeBasicStats(numbers ...int) (int, int, float64) {
+	if len(numbers) == 0 {
 		return 0, 0, 0.0
 	}
 
-	somme := 0
-	for _, n := range nombres {
-		somme += n
+	sum := 0
+	for _, n := range numbers {
+		sum += n
 	}
 
-	count := len(nombres)
-	moyenne := float64(somme) / float64(count)
+	count := len(numbers)
+	average := float64(sum) / float64(count)
 
-	return somme, count, moyenne
+	return sum, count, average
 }
 
-// Exercice 2
-func CalculerStatistiquesCompletes(nombres ...float64) (float64, float64, float64, float64, int, error) {
-	if len(nombres) == 0 {
-		return 0, 0, 0, 0, 0, errors.New("aucun argument fourni")
+// Exercise 2
+func ComputeFullStats(numbers ...float64) (float64, float64, float64, float64, int, error) {
+	if len(numbers) == 0 {
+		return 0, 0, 0, 0, 0, errors.New("no arguments provided")
 	}
 
-	min := nombres[0]
-	max := nombres[0]
-	somme := 0.0
+	min := numbers[0]
+	max := numbers[0]
+	sum := 0.0
 
-	for _, n := range nombres {
-		somme += n
+	for _, n := range numbers {
+		sum += n
 		if n < min {
 			min = n
 		}
@@ -42,74 +42,74 @@ func CalculerStatistiquesCompletes(nombres ...float64) (float64, float64, float6
 		}
 	}
 
-	count := len(nombres)
-	moyenne := somme / float64(count)
+	count := len(numbers)
+	average := sum / float64(count)
 
-	return min, max, somme, moyenne, count, nil
+	return min, max, sum, average, count, nil
 }
 
-// Exercice 3
-func AnalyserDonneesCapteur(releves ...float64) (float64, float64, float64, int, int, error) {
-	var valides []float64
-	invalides := 0
+// Exercise 3
+func AnalyzeSensorData(readings ...float64) (float64, float64, float64, int, int, error) {
+	var valid []float64
+	invalid := 0
 
-	for _, r := range releves {
+	for _, r := range readings {
 		if r > 0.0 && r <= 100.0 {
-			valides = append(valides, r)
+			valid = append(valid, r)
 		} else {
-			invalides++
+			invalid++
 		}
 	}
 
-	if len(valides) == 0 {
-		return 0, 0, 0, 0, invalides, errors.New("aucun relevé valide trouvé")
+	if len(valid) == 0 {
+		return 0, 0, 0, 0, invalid, errors.New("no valid readings found")
 	}
 
-	min, max, _, moyenne, validCount, _ := CalculerStatistiquesCompletes(valides...)
+	min, max, _, average, validCount, _ := ComputeFullStats(valid...)
 
-	return min, max, moyenne, validCount, invalides, nil
+	return min, max, average, validCount, invalid, nil
 }
 
 func main() {
-	// ===== Exercice 1 =====
-	fmt.Println("=== Exercice 1 : Statistiques de Base ===")
+	// ===== Exercise 1 =====
+	fmt.Println("=== Exercise 1: Basic Stats ===")
 
-	somme, count, moyenne := CalculerStatistiquesBase(10, 20, 30, 40)
-	fmt.Printf("Somme: %d, Count: %d, Moyenne: %.2f\n", somme, count, moyenne)
+	sum, count, average := ComputeBasicStats(10, 20, 30, 40)
+	fmt.Printf("Sum: %d, Count: %d, Average: %.2f\n", sum, count, average)
 
-	sommeVide, countVide, moyenneVide := CalculerStatistiquesBase()
-	fmt.Printf("Somme (vide): %d, Count (vide): %d, Moyenne (vide): %.2f\n", sommeVide, countVide, moyenneVide)
+	sumEmpty, countEmpty, averageEmpty := ComputeBasicStats()
+	fmt.Printf("Sum (empty): %d, Count (empty): %d, Average (empty): %.2f\n", sumEmpty, countEmpty, averageEmpty)
 
-	sommeUn, countUn, moyenneUn := CalculerStatistiquesBase(42)
-	fmt.Printf("Somme (un seul): %d, Count (un seul): %d, Moyenne (un seul): %.2f\n", sommeUn, countUn, moyenneUn)
+	sumOne, countOne, averageOne := ComputeBasicStats(42)
+	fmt.Printf("Sum (single): %d, Count (single): %d, Average (single): %.2f\n", sumOne, countOne, averageOne)
 
-	// ===== Exercice 2 =====
-	fmt.Println("\n=== Exercice 2 : Statistiques Complètes ===")
+	// ===== Exercise 2 =====
+	fmt.Println("\n=== Exercise 2: Full Stats ===")
 
-	min, max, sum, avg, cnt, err := CalculerStatistiquesCompletes(1.5, 2.8, 0.7, 3.1)
+	min, max, total, avg, cnt, err := ComputeFullStats(1.5, 2.8, 0.7, 3.1)
 	if err != nil {
-		fmt.Println("Erreur:", err)
+		fmt.Println("Error:", err)
 	} else {
-		fmt.Printf("Min: %.2f, Max: %.2f, Somme: %.2f, Moyenne: %.2f, Count: %d\n", min, max, sum, avg, cnt)
+		fmt.Printf("Min: %.2f, Max: %.2f, Sum: %.2f, Average: %.2f, Count: %d\n", min, max, total, avg, cnt)
 	}
 
-	_, _, _, _, _, errVide := CalculerStatistiquesCompletes()
-	if errVide != nil {
-		fmt.Println("Erreur pour arguments vides:", errVide)
+	_, _, _, _, _, errEmpty := ComputeFullStats()
+	if errEmpty != nil {
+		fmt.Println("Error for empty arguments:", errEmpty)
 	}
 
-	// ===== Exercice 3 =====
-	fmt.Println("\n=== Exercice 3 : Analyse de Données de Capteur ===")
+	// ===== Exercise 3 =====
+	fmt.Println("\n=== Exercise 3: Sensor Data Analysis ===")
 
-	minTemp, maxTemp, avgTemp, validCnt, invalidCnt, errCapteur := AnalyserDonneesCapteur(22.5, 23.1, -5.0, 101.0, 21.9, 0.0, 24.0)
-	if errCapteur != nil {
-		fmt.Println("Erreur d'analyse:", errCapteur)
+	minTemp, maxTemp, avgTemp, validCnt, invalidCnt, errSensor := AnalyzeSensorData(22.5, 23.1, -5.0, 101.0, 21.9, 0.0, 24.0)
+	if errSensor != nil {
+		fmt.Println("Analysis error:", errSensor)
 	} else {
-		fmt.Printf("Temp Min: %.2f, Max: %.2f, Moyenne: %.2f, Valides: %d, Invalides: %d\n", minTemp, maxTemp, avgTemp, validCnt, invalidCnt)
+		fmt.Printf("Temp Min: %.2f, Max: %.2f, Average: %.2f, Valid: %d, Invalid: %d\n", minTemp, maxTemp, avgTemp, validCnt, invalidCnt)
 	}
 
-	_, _, _, _, _, errToutInvalide := AnalyserDonneesCapteur(-10.0, 105.0, 0.0)
-	if errToutInvalide != nil {
-		fmt.Println("Erreur pour données toutes invalides:", errToutInvalide)
+	_, _, _, _, _, errAllInvalid := AnalyzeSensorData(-10.0, 105.0, 0.0)
+	if errAllInvalid != nil {
+		fmt.Println("Error for all invalid data:", errAllInvalid)
 	}
 }
