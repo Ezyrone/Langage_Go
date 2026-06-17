@@ -1,16 +1,16 @@
 # Langage Go - M2
 
-This repository contains all Go coursework, labs and exercises for the M2 AL at ESGI Grenoble.
+Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble
 
-## Labs
+## TPs
 
-| Folder | Topic | Concepts |
-|--------|-------|----------|
-| `tp_1/` | Types, variables and constants | Explicit declaration, type inference (`:=`), constants, `iota`, zero values, type conversion |
-| `tp_2/` | Variadic functions and multiple returns | `...type`, multiple returns, error handling with `error`, data filtering |
-| `tp_3/` | Slices, Maps and performance | Slices (`append`, `len`, `cap`), Maps, structs, category indexing, benchmark with/without pre-allocation, `sort.Slice` |
-| `tp_4/` | Structs and methods | Structs, methods, receivers (value vs pointer), `String()`, constructors with validation, `math` |
+| Dossier | Thème | Notions abordées |
+|---------|-------|------------------|
+| `tp_1/` | Types, variables et constantes | Déclaration explicite, inférence (`:=`), constantes, `iota`, zero values, conversion de type |
+| `tp_2/` | Fonctions variadiques et retours multiples | `...type`, retours multiples, gestion d'erreurs avec `error`, filtrage de données |
+| `tp_3/` | Slices, Maps et performance | Slices (`append`, `len`, `cap`), Maps, structs, indexation par catégorie, benchmark avec/sans pré-allocation, `sort.Slice` |
+| `tp_4/` | Structs et méthodes | Structs, méthodes, receivers (valeur vs pointeur), `String()`, constructeurs avec validation, `math` |
 
-## Other
+## Autres
 
-- `training_go/` — Drafts and personal tests (hello world, greetings module, etc.)
+- `training_go/` — Brouillons et tests perso (hello world, module greetings, etc.)
