@@ -21,7 +21,7 @@ const (
 
 func main() {
 	// Exercice 1
-	fmt.Println("=== Exercice 1 : Déclaration Explicite ===")
+	fmt.Println("Exercice 1")
 
 	var nomUtilisateur string = "Jory"
 	var ageUtilisateur int = 30
@@ -34,7 +34,7 @@ func main() {
 	fmt.Println("Solde :", soldeCompte)
 
 	// Exercice 2
-	fmt.Println("\n=== Exercice 2 : Inférence de Type ===")
+	fmt.Println("Exercice 2")
 
 	villeResidence := "Grenoble"
 	codePostal := 38000
@@ -45,7 +45,7 @@ func main() {
 	fmt.Printf("Taux de remise : %v (type: %T)\n", tauxRemise, tauxRemise)
 
 	// Exercice 3
-	fmt.Println("\n=== Exercice 3 : Constantes ===")
+	fmt.Println("Exercice 3")
 
 	rayon := 10.5
 	circonference := 2 * PI * rayon
@@ -56,7 +56,7 @@ func main() {
 	fmt.Println("Année de lancement :", ANNEE_LANCEMENT)
 
 	// Exercice 4
-	fmt.Println("\n=== Exercice 4 : Réaffectation et Zero Values ===")
+	fmt.Println("Exercice 4")
 
 	ancienAge := ageUtilisateur
 	ageUtilisateur = ageUtilisateur + 1
@@ -69,7 +69,7 @@ func main() {
 	fmt.Printf("compteur (non initialisé) : %d (zero value de int = 0)\n", compteur)
 
 	// Bonus
-	fmt.Println("\n=== Bonus ===")
+	fmt.Println("Bonus")
 
 	var a, b, c int = 1, 2, 3
 	fmt.Println("Déclaration multiple :", a, b, c)
