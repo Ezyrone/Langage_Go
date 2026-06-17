@@ -29,4 +29,4 @@ Les tâches sont réparties entre les 3 travailleurs. L'ordre de traitement dép
 
 ## Autres
 
-- `TP/training_exo_1/` — Brouillons et tests perso (hello world, module greetings, etc.)
+- `training_exo_1/` — Brouillons et tests perso (hello world, module greetings, etc.)
