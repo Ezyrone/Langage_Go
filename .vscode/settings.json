@@ -1,0 +1,16 @@
+{
+    "conventionalCommits.scopes": [
+        "training",
+        "readme",
+        "project",
+        "main",
+        "exo1",
+        "tp2",
+        "tp3",
+        "git",
+        "tp 4",
+        "tp 5",
+        "tp 6"
+    ],
+    "cSpell.language": "en,fr"
+}
