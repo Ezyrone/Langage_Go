@@ -4,14 +4,10 @@ import (
 	"fmt"
 )
 
-// --- Partie 1 : Définition et Implémentation Implicite d'Interfaces ---
-
-// Exercice 1.1 : Interface Notifier
 type Notifier interface {
 	Send(message string) error
 }
 
-// Exercice 1.2 : EmailNotifier
 type EmailNotifier struct {
 	Recipient string
 	Sender    string
@@ -22,7 +18,6 @@ func (e EmailNotifier) Send(message string) error {
 	return nil
 }
 
-// Exercice 1.3 : SMSNotifier
 type SMSNotifier struct {
 	PhoneNumber string
 }
@@ -32,7 +27,6 @@ func (s SMSNotifier) Send(message string) error {
 	return nil
 }
 
-// Exercice 1.4 : ConsoleNotifier
 type ConsoleNotifier struct{}
 
 func (c ConsoleNotifier) Send(message string) error {
@@ -40,9 +34,6 @@ func (c ConsoleNotifier) Send(message string) error {
 	return nil
 }
 
-// --- Partie 2 : L'Interface Vide ---
-
-// Exercice 2.1 : processData avec interface{}
 func processData(data interface{}) {
 	switch v := data.(type) {
 	case int:
@@ -58,9 +49,6 @@ func processData(data interface{}) {
 	}
 }
 
-// --- Partie 3 : Intégration et Réflexion ---
-
-// Exercice 3.1 : Smart Notifier
 type User struct {
 	Name  string
 	Email string
@@ -90,8 +78,8 @@ func sendSmartNotification(data interface{}, message string) error {
 }
 
 func main() {
-	// === Partie 1 : Exercice 1.5 - Utilisation Polymorphique ===
-	fmt.Println("=== Partie 1 : Utilisation Polymorphique ===")
+
+	fmt.Println("Partie 1 :")
 
 	notifiers := []Notifier{
 		EmailNotifier{Recipient: "alice@example.com", Sender: "bob@example.com"},
@@ -103,8 +91,7 @@ func main() {
 		n.Send("Votre commande a été expédiée !")
 	}
 
-	// === Partie 2 : Exercice 2.2 - Appel de processData ===
-	fmt.Println("\n=== Partie 2 : processData ===")
+	fmt.Println("\nPartie 2 : processData ===")
 
 	processData(42)
 	processData("Bonjour le monde")
@@ -113,7 +100,6 @@ func main() {
 	processData([]int{1, 2, 3})
 	processData(3.14)
 
-	// === Partie 3 : Exercice 3.1 - Smart Notifier ===
 	fmt.Println("\n=== Partie 3 : Smart Notifier ===")
 
 	userWithAll := User{Name: "Alice", Email: "alice@example.com", Phone: "+33 6 12 34 56 78"}
@@ -126,7 +112,6 @@ func main() {
 	sendSmartNotification("broadcast", "Maintenance prévue ce soir")
 	sendSmartNotification(123, "Ce message ne sera pas envoyé")
 
-	// === Exercice 3.2 : Réflexion ===
 	fmt.Println("\n=== Exercice 3.2 : Questions de Réflexion ===")
 	fmt.Println(`
 1. L'implémentation implicite des interfaces en Go permet un découplage total :
