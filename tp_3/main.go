@@ -7,249 +7,253 @@ import (
 	"time"
 )
 
-type Produit struct {
-	ID        int
-	Nom       string
-	Prix      float64
-	Categorie string
+type Product struct {
+	ID       int
+	Name     string
+	Price    float64
+	Category string
 }
 
-func categorieExiste(nom string, categories []string) bool {
+func categoryExists(name string, categories []string) bool {
 	for _, c := range categories {
-		if c == nom {
+		if c == name {
 			return true
 		}
 	}
 	return false
 }
 
-func supprimerCategorie(nom string, categories []string) []string {
+func removeCategory(name string, categories []string) []string {
 	for i, c := range categories {
-		if c == nom {
+		if c == name {
 			return append(categories[:i], categories[i+1:]...)
 		}
 	}
 	return categories
 }
 
-func obtenirProduit(id int, inventaire map[int]Produit, stock map[int]int) (Produit, int, bool) {
-	produit, existe := inventaire[id]
-	if !existe {
-		return Produit{}, 0, false
+func getProduct(id int, inventory map[int]Product, stock map[int]int) (Product, int, bool) {
+	product, exists := inventory[id]
+	if !exists {
+		return Product{}, 0, false
 	}
-	return produit, stock[id], true
+	return product, stock[id], true
 }
 
-func vendreProduit(id int, quantite int, stock map[int]int) bool {
-	if stock[id] < quantite {
+func sellProduct(id int, quantity int, stock map[int]int) bool {
+	if stock[id] < quantity {
 		return false
 	}
-	stock[id] -= quantite
+	stock[id] -= quantity
 	return true
 }
 
-func reapprovisionnerProduit(id int, quantite int, stock map[int]int) {
-	stock[id] += quantite
+func restockProduct(id int, quantity int, stock map[int]int) {
+	stock[id] += quantity
 }
 
-func listerProduitsParCategorie(categorie string, inventaire map[int]Produit, produitsParCategorie map[string][]int) {
-	ids, existe := produitsParCategorie[categorie]
-	if !existe || len(ids) == 0 {
-		fmt.Printf("  Aucun produit dans la catégorie \"%s\"\n", categorie)
+func listProductsByCategory(category string, inventory map[int]Product, productsByCategory map[string][]int) {
+	ids, exists := productsByCategory[category]
+	if !exists || len(ids) == 0 {
+		fmt.Printf("  No products in category \"%s\"\n", category)
 		return
 	}
 	for _, id := range ids {
-		p := inventaire[id]
-		fmt.Printf("  [%d] %s - %.2f€\n", p.ID, p.Nom, p.Prix)
+		p := inventory[id]
+		fmt.Printf("  [%d] %s - $%.2f\n", p.ID, p.Name, p.Price)
 	}
 }
 
-func trierParPrix(inventaire map[int]Produit, croissant bool) []Produit {
-	produits := make([]Produit, 0, len(inventaire))
-	for _, p := range inventaire {
-		produits = append(produits, p)
+func sortByPrice(inventory map[int]Product, ascending bool) []Product {
+	products := make([]Product, 0, len(inventory))
+	for _, p := range inventory {
+		products = append(products, p)
 	}
-	sort.Slice(produits, func(i, j int) bool {
-		if croissant {
-			return produits[i].Prix < produits[j].Prix
+	sort.Slice(products, func(i, j int) bool {
+		if ascending {
+			return products[i].Price < products[j].Price
 		}
-		return produits[i].Prix > produits[j].Prix
+		return products[i].Price > products[j].Price
 	})
-	return produits
+	return products
 }
 
-func valeurStockCategorie(categorie string, inventaire map[int]Produit, stock map[int]int, produitsParCategorie map[string][]int) float64 {
+func categoryStockValue(category string, inventory map[int]Product, stock map[int]int, productsByCategory map[string][]int) float64 {
 	total := 0.0
-	ids := produitsParCategorie[categorie]
+	ids := productsByCategory[category]
 	for _, id := range ids {
-		total += inventaire[id].Prix * float64(stock[id])
+		total += inventory[id].Price * float64(stock[id])
 	}
 	return total
 }
 
-func afficherInventaire(inventaire map[int]Produit, stock map[int]int) {
-	for id, p := range inventaire {
-		fmt.Printf("  [%d] %s | %.2f€ | Catégorie: %s | Stock: %d\n", id, p.Nom, p.Prix, p.Categorie, stock[id])
+func displayInventory(inventory map[int]Product, stock map[int]int) {
+	for id, p := range inventory {
+		fmt.Printf("  [%d] %s | $%.2f | Category: %s | Stock: %d\n", id, p.Name, p.Price, p.Category, stock[id])
 	}
 }
 
 func main() {
 
-	fmt.Println("PARTIE 1 : ")
+	// Part 1: Categories (Slices)
+	fmt.Println("PART 1: Slices")
 
-	categories := []string{"Électronique", "Vêtements", "Livres"}
-	categories = append(categories, "Alimentation", "Sport")
-	fmt.Println("Catégories:", categories)
+	categories := []string{"Electronics", "Clothing", "Books"}
+	categories = append(categories, "Food", "Sports")
+	fmt.Println("Categories:", categories)
 
-	fmt.Println("\"Livres\" existe ?", categorieExiste("Livres", categories))
-	fmt.Println("\"Musique\" existe ?", categorieExiste("Musique", categories))
+	fmt.Println("\"Books\" exists?", categoryExists("Books", categories))
+	fmt.Println("\"Music\" exists?", categoryExists("Music", categories))
 
-	categories = supprimerCategorie("Vêtements", categories)
-	fmt.Println("Après suppression de \"Vêtements\":", categories)
+	categories = removeCategory("Clothing", categories)
+	fmt.Println("After removing \"Clothing\":", categories)
 
-	categories = supprimerCategorie("Musique", categories)
-	fmt.Println("Après suppression de \"Musique\" (inexistante):", categories)
+	categories = removeCategory("Music", categories)
+	fmt.Println("After removing \"Music\" (non-existent):", categories)
 
-	fmt.Printf("Longueur: %d, Capacité: %d\n", len(categories), cap(categories))
-	fmt.Println("-> len = nombre d'éléments actuels, cap = taille du tableau sous-jacent.")
-	fmt.Println("   La capacité double quand le slice dépasse sa capacité lors d'un append.")
+	fmt.Printf("Length: %d, Capacity: %d\n", len(categories), cap(categories))
+	fmt.Println("-> len = current number of elements, cap = size of the underlying array.")
+	fmt.Println("   Capacity doubles when the slice exceeds its capacity during an append.")
 
-	fmt.Println("\n PARTIE 2 : ")
+	// Part 2: Products and Stock (Maps)
+	fmt.Println("\nPART 2: Maps")
 
-	inventaireProduits := map[int]Produit{
-		1: {ID: 1, Nom: "Laptop", Prix: 999.99, Categorie: "Électronique"},
-		2: {ID: 2, Nom: "Go Programming", Prix: 39.90, Categorie: "Livres"},
-		3: {ID: 3, Nom: "Ballon de foot", Prix: 24.99, Categorie: "Sport"},
+	productInventory := map[int]Product{
+		1: {ID: 1, Name: "Laptop", Price: 999.99, Category: "Electronics"},
+		2: {ID: 2, Name: "Go Programming", Price: 39.90, Category: "Books"},
+		3: {ID: 3, Name: "Soccer Ball", Price: 24.99, Category: "Sports"},
 	}
 
-	stockProduits := map[int]int{
+	productStock := map[int]int{
 		1: 15,
 		2: 50,
 		3: 30,
 	}
 
-	p := inventaireProduits[1]
-	p.Prix = 899.99
-	inventaireProduits[1] = p
-	fmt.Println("Prix du Laptop modifié à 899.99€")
+	p := productInventory[1]
+	p.Price = 899.99
+	productInventory[1] = p
+	fmt.Println("Laptop price updated to $899.99")
 
-	stockProduits[2] = 45
-	fmt.Println("Stock de \"Go Programming\" mis à jour à 45")
+	productStock[2] = 45
+	fmt.Println("\"Go Programming\" stock updated to 45")
 
-	fmt.Println("\nInventaire complet:")
-	afficherInventaire(inventaireProduits, stockProduits)
+	fmt.Println("\nFull inventory:")
+	displayInventory(productInventory, productStock)
 
-	fmt.Println("\nRecherche produit ID=2:")
-	if prod, qty, ok := obtenirProduit(2, inventaireProduits, stockProduits); ok {
-		fmt.Printf("  Trouvé: %s, Stock: %d\n", prod.Nom, qty)
+	fmt.Println("\nSearching product ID=2:")
+	if prod, qty, ok := getProduct(2, productInventory, productStock); ok {
+		fmt.Printf("  Found: %s, Stock: %d\n", prod.Name, qty)
 	}
 
-	fmt.Println("Recherche produit ID=99:")
-	if _, _, ok := obtenirProduit(99, inventaireProduits, stockProduits); !ok {
-		fmt.Println("  Produit non trouvé")
+	fmt.Println("Searching product ID=99:")
+	if _, _, ok := getProduct(99, productInventory, productStock); !ok {
+		fmt.Println("  Product not found")
 	}
 
-	delete(inventaireProduits, 3)
-	delete(stockProduits, 3)
-	fmt.Println("\nProduit ID=3 supprimé")
-	if _, _, ok := obtenirProduit(3, inventaireProduits, stockProduits); !ok {
-		fmt.Println("  Vérification: produit ID=3 n'existe plus")
+	delete(productInventory, 3)
+	delete(productStock, 3)
+	fmt.Println("\nProduct ID=3 deleted")
+	if _, _, ok := getProduct(3, productInventory, productStock); !ok {
+		fmt.Println("  Verification: product ID=3 no longer exists")
 	}
 
-	fmt.Println("\nOpérations de stock:")
-	fmt.Printf("  Stock Laptop avant vente: %d\n", stockProduits[1])
-	if vendreProduit(1, 3, stockProduits) {
-		fmt.Printf("  Vente de 3 Laptops réussie. Stock: %d\n", stockProduits[1])
+	fmt.Println("\nStock operations:")
+	fmt.Printf("  Laptop stock before sale: %d\n", productStock[1])
+	if sellProduct(1, 3, productStock) {
+		fmt.Printf("  Sold 3 Laptops. Stock: %d\n", productStock[1])
 	}
-	if !vendreProduit(1, 100, stockProduits) {
-		fmt.Println("  Vente de 100 Laptops échouée: stock insuffisant")
-	}
-
-	reapprovisionnerProduit(1, 10, stockProduits)
-	fmt.Printf("  Réapprovisionnement de 10 Laptops. Stock: %d\n", stockProduits[1])
-
-	fmt.Println("\n========== PARTIE 3 : Combinaison & Performance ==========")
-
-	inventaireProduits[3] = Produit{ID: 3, Nom: "Ballon de foot", Prix: 24.99, Categorie: "Sport"}
-	stockProduits[3] = 30
-	inventaireProduits[4] = Produit{ID: 4, Nom: "Casque audio", Prix: 59.99, Categorie: "Électronique"}
-	stockProduits[4] = 20
-
-	produitsParCategorie := make(map[string][]int)
-	for _, p := range inventaireProduits {
-		produitsParCategorie[p.Categorie] = append(produitsParCategorie[p.Categorie], p.ID)
+	if !sellProduct(1, 100, productStock) {
+		fmt.Println("  Sale of 100 Laptops failed: insufficient stock")
 	}
 
-	fmt.Println("Produits par catégorie \"Électronique\":")
-	listerProduitsParCategorie("Électronique", inventaireProduits, produitsParCategorie)
-	fmt.Println("Produits par catégorie \"Livres\":")
-	listerProduitsParCategorie("Livres", inventaireProduits, produitsParCategorie)
-	fmt.Println("Produits par catégorie \"Jardinage\":")
-	listerProduitsParCategorie("Jardinage", inventaireProduits, produitsParCategorie)
+	restockProduct(1, 10, productStock)
+	fmt.Printf("  Restocked 10 Laptops. Stock: %d\n", productStock[1])
 
-	fmt.Println("\n--- Performance (100 000 produits) ---")
+	// Part 3: Combination & Performance
+	fmt.Println("\nPART 3: Combination & Performance")
+
+	productInventory[3] = Product{ID: 3, Name: "Soccer Ball", Price: 24.99, Category: "Sports"}
+	productStock[3] = 30
+	productInventory[4] = Product{ID: 4, Name: "Headphones", Price: 59.99, Category: "Electronics"}
+	productStock[4] = 20
+
+	productsByCategory := make(map[string][]int)
+	for _, p := range productInventory {
+		productsByCategory[p.Category] = append(productsByCategory[p.Category], p.ID)
+	}
+
+	fmt.Println("Products in category \"Electronics\":")
+	listProductsByCategory("Electronics", productInventory, productsByCategory)
+	fmt.Println("Products in category \"Books\":")
+	listProductsByCategory("Books", productInventory, productsByCategory)
+	fmt.Println("Products in category \"Gardening\":")
+	listProductsByCategory("Gardening", productInventory, productsByCategory)
+
+	fmt.Println("\n--- Performance (100,000 products) ---")
 	n := 100_000
-	cats := []string{"Électronique", "Livres", "Sport", "Alimentation", "Mode"}
+	cats := []string{"Electronics", "Books", "Sports", "Food", "Fashion"}
 
 	start := time.Now()
-	bigInv := make(map[int]Produit)
+	bigInv := make(map[int]Product)
 	bigStock := make(map[int]int)
 	for i := 0; i < n; i++ {
-		bigInv[i] = Produit{
-			ID:        i,
-			Nom:       fmt.Sprintf("Produit_%d", i),
-			Prix:      rand.Float64() * 500,
-			Categorie: cats[rand.Intn(len(cats))],
+		bigInv[i] = Product{
+			ID:       i,
+			Name:     fmt.Sprintf("Product_%d", i),
+			Price:    rand.Float64() * 500,
+			Category: cats[rand.Intn(len(cats))],
 		}
 		bigStock[i] = rand.Intn(200)
 	}
-	dureesSansPrealloc := time.Since(start)
-	fmt.Printf("Ajout SANS pré-allocation : %v\n", dureesSansPrealloc)
+	withoutPrealloc := time.Since(start)
+	fmt.Printf("Insert WITHOUT pre-allocation: %v\n", withoutPrealloc)
 
 	start = time.Now()
-	bigInv2 := make(map[int]Produit, n)
+	bigInv2 := make(map[int]Product, n)
 	bigStock2 := make(map[int]int, n)
 	for i := 0; i < n; i++ {
-		bigInv2[i] = Produit{
-			ID:        i,
-			Nom:       fmt.Sprintf("Produit_%d", i),
-			Prix:      rand.Float64() * 500,
-			Categorie: cats[rand.Intn(len(cats))],
+		bigInv2[i] = Product{
+			ID:       i,
+			Name:     fmt.Sprintf("Product_%d", i),
+			Price:    rand.Float64() * 500,
+			Category: cats[rand.Intn(len(cats))],
 		}
 		bigStock2[i] = rand.Intn(200)
 	}
-	dureesAvecPrealloc := time.Since(start)
-	fmt.Printf("Ajout AVEC pré-allocation : %v\n", dureesAvecPrealloc)
-	fmt.Println("-> La pré-allocation évite les rehash/réallocations internes de la map.")
+	withPrealloc := time.Since(start)
+	fmt.Printf("Insert WITH pre-allocation: %v\n", withPrealloc)
+	fmt.Println("-> Pre-allocation avoids internal rehash/reallocations in the map.")
 
 	start = time.Now()
 	for i := 0; i < 10_000; i++ {
 		_ = bigInv[rand.Intn(n)]
 	}
-	fmt.Printf("10 000 recherches par ID : %v\n", time.Since(start))
+	fmt.Printf("10,000 lookups by ID: %v\n", time.Since(start))
 
 	start = time.Now()
 	total := 0.0
 	for _, p := range bigInv {
-		total += p.Prix
+		total += p.Price
 	}
-	fmt.Printf("Itération sur %d éléments : %v\n", n, time.Since(start))
-	fmt.Println("-> L'accès par clé dans une map est O(1) en moyenne (hash table).")
-	fmt.Println("   L'itération est O(n). La pré-allocation réduit le temps d'insertion")
-	fmt.Println("   car la map n'a pas besoin de grandir dynamiquement.")
+	fmt.Printf("Iteration over %d elements: %v\n", n, time.Since(start))
+	fmt.Println("-> Key access in a map is O(1) on average (hash table).")
+	fmt.Println("   Iteration is O(n). Pre-allocation reduces insertion time")
+	fmt.Println("   because the map doesn't need to grow dynamically.")
 
-	fmt.Println("\n========== BONUS ==========")
+	// Bonus
+	fmt.Println("\nBONUS")
 
-	fmt.Println("Produits triés par prix croissant:")
-	for _, p := range trierParPrix(inventaireProduits, true) {
-		fmt.Printf("  %s - %.2f€\n", p.Nom, p.Prix)
-	}
-
-	fmt.Println("Produits triés par prix décroissant:")
-	for _, p := range trierParPrix(inventaireProduits, false) {
-		fmt.Printf("  %s - %.2f€\n", p.Nom, p.Prix)
+	fmt.Println("Products sorted by price (ascending):")
+	for _, p := range sortByPrice(productInventory, true) {
+		fmt.Printf("  %s - $%.2f\n", p.Name, p.Price)
 	}
 
-	valeur := valeurStockCategorie("Électronique", inventaireProduits, stockProduits, produitsParCategorie)
-	fmt.Printf("Valeur totale du stock \"Électronique\": %.2f€\n", valeur)
+	fmt.Println("Products sorted by price (descending):")
+	for _, p := range sortByPrice(productInventory, false) {
+		fmt.Printf("  %s - $%.2f\n", p.Name, p.Price)
+	}
+
+	value := categoryStockValue("Electronics", productInventory, productStock, productsByCategory)
+	fmt.Printf("Total stock value for \"Electronics\": $%.2f\n", value)
 }

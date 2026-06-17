@@ -2,83 +2,83 @@ package main
 
 import "fmt"
 
-// Constantes
+// Constants
 const (
-	PI              = 3.14159
-	NOM_APPLICATION = "Gestionnaire Go"
-	ANNEE_LANCEMENT = 2023
+	PI       = 3.14159
+	APP_NAME = "Go Manager"
+	LAUNCH_YEAR = 2023
 )
 
 const (
-	Lundi = iota
-	Mardi
-	Mercredi
-	Jeudi
-	Vendredi
-	Samedi
-	Dimanche
+	Monday = iota
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+	Sunday
 )
 
 func main() {
-	// Exercice 1
-	fmt.Println("Exercice 1")
+	// Exercise 1
+	fmt.Println("Exercise 1")
 
-	var nomUtilisateur string = "Jory"
-	var ageUtilisateur int = 30
-	var estConnecte bool = true
-	var soldeCompte float64 = 1542.75
+	var userName string = "Jory"
+	var userAge int = 30
+	var isConnected bool = true
+	var accountBalance float64 = 1542.75
 
-	fmt.Println("Nom :", nomUtilisateur)
-	fmt.Println("Âge :", ageUtilisateur)
-	fmt.Println("Connecté :", estConnecte)
-	fmt.Println("Solde :", soldeCompte)
+	fmt.Println("Name:", userName)
+	fmt.Println("Age:", userAge)
+	fmt.Println("Connected:", isConnected)
+	fmt.Println("Balance:", accountBalance)
 
-	// Exercice 2
-	fmt.Println("Exercice 2")
+	// Exercise 2
+	fmt.Println("\nExercise 2")
 
-	villeResidence := "Grenoble"
-	codePostal := 38000
-	tauxRemise := 15.5
+	city := "Grenoble"
+	zipCode := 38000
+	discountRate := 15.5
 
-	fmt.Printf("Ville : %v (type: %T)\n", villeResidence, villeResidence)
-	fmt.Printf("Code postal : %v (type: %T)\n", codePostal, codePostal)
-	fmt.Printf("Taux de remise : %v (type: %T)\n", tauxRemise, tauxRemise)
+	fmt.Printf("City: %v (type: %T)\n", city, city)
+	fmt.Printf("Zip code: %v (type: %T)\n", zipCode, zipCode)
+	fmt.Printf("Discount rate: %v (type: %T)\n", discountRate, discountRate)
 
-	// Exercice 3
-	fmt.Println("Exercice 3")
+	// Exercise 3
+	fmt.Println("\nExercise 3")
 
-	rayon := 10.5
-	circonference := 2 * PI * rayon
-	fmt.Printf("Circonférence d'un cercle de rayon %.2f : %.4f\n", rayon, circonference)
+	radius := 10.5
+	circumference := 2 * PI * radius
+	fmt.Printf("Circumference of a circle with radius %.2f: %.4f\n", radius, circumference)
 
-	fmt.Println("PI :", PI)
-	fmt.Println("Application :", NOM_APPLICATION)
-	fmt.Println("Année de lancement :", ANNEE_LANCEMENT)
+	fmt.Println("PI:", PI)
+	fmt.Println("Application:", APP_NAME)
+	fmt.Println("Launch year:", LAUNCH_YEAR)
 
-	// Exercice 4
-	fmt.Println("Exercice 4")
+	// Exercise 4
+	fmt.Println("\nExercise 4")
 
-	ancienAge := ageUtilisateur
-	ageUtilisateur = ageUtilisateur + 1
-	fmt.Printf("Anniversaire ! Ancien âge : %d → Nouvel âge : %d\n", ancienAge, ageUtilisateur)
+	oldAge := userAge
+	userAge = userAge + 1
+	fmt.Printf("Birthday! Old age: %d -> New age: %d\n", oldAge, userAge)
 
 	var message string
-	fmt.Printf("message (non initialisé) : \"%s\" (zero value de string = chaîne vide)\n", message)
+	fmt.Printf("message (uninitialized): \"%s\" (zero value of string = empty string)\n", message)
 
-	var compteur int
-	fmt.Printf("compteur (non initialisé) : %d (zero value de int = 0)\n", compteur)
+	var counter int
+	fmt.Printf("counter (uninitialized): %d (zero value of int = 0)\n", counter)
 
 	// Bonus
-	fmt.Println("Bonus")
+	fmt.Println("\nBonus")
 
 	var a, b, c int = 1, 2, 3
-	fmt.Println("Déclaration multiple :", a, b, c)
+	fmt.Println("Multiple declaration:", a, b, c)
 
-	fmt.Println("Lundi =", Lundi, "| Mercredi =", Mercredi, "| Dimanche =", Dimanche)
+	fmt.Println("Monday =", Monday, "| Wednesday =", Wednesday, "| Sunday =", Sunday)
 
-	var entier int = 42
+	var integer int = 42
 	var decimal float64 = 3.14
 
-	resultat := float64(entier) + decimal
-	fmt.Printf("Conversion : %d (int) + %.2f (float64) = %.2f\n", entier, decimal, resultat)
+	result := float64(integer) + decimal
+	fmt.Printf("Conversion: %d (int) + %.2f (float64) = %.2f\n", integer, decimal, result)
 }
