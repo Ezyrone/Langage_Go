@@ -1,6 +1,6 @@
 # Langage Go - M2
 
-Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble
+Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble
 
 ## TPs
 
