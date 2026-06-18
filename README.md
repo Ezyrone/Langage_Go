@@ -17,6 +17,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `TP/tp_9_exo_4e/` | Mutex et WaitGroup | `sync.Mutex`, `sync.WaitGroup`, race conditions, `sync/atomic`, sections critiques |
 | `TP/tp_10_exo_4f/` | Context, annulation et timeout | `context.WithTimeout`, `context.WithCancel`, `ctx.Done()`, `ctx.Err()`, arrêt propre |
 | `TP/tp_11_exo_5a/` | API REST avec `net/http` | `http.ServeMux`, handlers, CRUD en mémoire, `encoding/json`, `github.com/google/uuid` |
+| `TP/tp_12_exo_5b/` | API REST avancée avec Gin | `gin-gonic/gin`, middlewares (logger, auth), `binding:"required"`, groupes de routes, versioning API |
 
 ## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
 
