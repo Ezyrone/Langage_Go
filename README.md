@@ -1,14 +1,14 @@
-# Langage Go - M2
+<h1 align="center">Langage Go - M2</h1>
 
-Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble
-
----
-
-**Jory GRZESZCZAK** · M2 AL · ESGI Grenoble
+<p align="center">Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble</p>
 
 ---
 
-## TPs
+<p align="center"><strong>Jory GRZESZCZAK</strong> · M2 AL · ESGI Grenoble</p>
+
+---
+
+<h2 align="center">TPs</h2>
 
 | Dossier | Thème | Notions abordées |
 |---------|-------|------------------|
@@ -27,7 +27,7 @@ Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés d
 | `TP/tp_13_exo_5c/` | Sérialisation JSON et struct tags | `encoding/json`, struct tags, `omitempty`, `json:"-"`, `Marshal`/`Unmarshal`, custom `Marshaler` |
 | `TP/tp_14_exo_5d/` | Accès aux bases de données | `database/sql`, `sqlx`, GORM, SQLite, CRUD, ORM, auto-migration |
 
-## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
+<h2 align="center">Réponses aux questions du TP 4A (Goroutines et Synchronisation)</h2>
 
 **Exercice 1 — Que constatez-vous dans la sortie ?**
 Sans mécanisme de synchronisation, `main()` se termine immédiatement après avoir lancé les goroutines. Le programme s'arrête avant que les goroutines n'aient le temps de finir leur travail. On observe peu ou pas de messages "Tâche terminée", car quand la fonction `main` retourne, toutes les goroutines encore en cours sont tuées.
@@ -41,7 +41,7 @@ Non. Les goroutines s'exécutent en concurrence avec des durées aléatoires, do
 **Exercice 4 — Comment le nombre de travailleurs affecte-t-il le temps total ?**
 Les tâches sont réparties entre les 3 travailleurs. L'ordre de traitement dépend de la disponibilité de chaque travailleur. Avec plus de travailleurs, le temps total diminue car davantage de tâches sont traitées en parallèle. Avec 3 travailleurs pour 10 tâches, chacun traite environ 3 à 4 tâches.
 
-## Réponses aux questions du TP 5C (Sérialisation JSON et Struct Tags)
+<h2 align="center">Réponses aux questions du TP 5C (Sérialisation JSON et Struct Tags)</h2>
 
 **Exercice 1 — Les clés JSON correspondent-elles aux noms des champs ?**
 Oui, exactement. Sans struct tags, Go utilise le nom du champ tel quel comme clé JSON (`Nom`, `Age`, `Email`, `Actif` avec majuscule). C'est rarement le format souhaité pour une API (on préfère `snake_case` ou `camelCase`).
@@ -61,7 +61,7 @@ Un JSON malformé ou avec des types incorrects peut provoquer des données corro
 
 *Question 2 (timestamp Unix) :* Pour sérialiser un `time.Time` en timestamp Unix, on crée un type personnalisé (`UnixTime`) qui implémente les interfaces `json.Marshaler` et `json.Unmarshaler`. `MarshalJSON` retourne `t.Unix()` et `UnmarshalJSON` reconstruit le `Time` depuis le timestamp entier.
 
-## Réponses aux questions du TP 5D (Accès aux Bases de Données)
+<h2 align="center">Réponses aux questions du TP 5D (Accès aux Bases de Données)</h2>
 
 ### Comparaison des trois approches
 
@@ -82,6 +82,6 @@ Un JSON malformé ou avec des types incorrects peut provoquer des données corro
 | Select one | `QueryRow().Scan()` | `db.Get()` | `db.First()` |
 | Lignes de code pour GetAll | ~12 lignes | ~3 lignes | ~3 lignes |
 
-## Autres
+<h2 align="center">Autres</h2>
 
 - `training_exo_1/` — Brouillons et tests perso (hello world, module greetings, etc.)
