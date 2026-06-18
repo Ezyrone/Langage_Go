@@ -18,6 +18,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `TP/tp_10_exo_4f/` | Context, annulation et timeout | `context.WithTimeout`, `context.WithCancel`, `ctx.Done()`, `ctx.Err()`, arrêt propre |
 | `TP/tp_11_exo_5a/` | API REST avec `net/http` | `http.ServeMux`, handlers, CRUD en mémoire, `encoding/json`, `github.com/google/uuid` |
 | `TP/tp_12_exo_5b/` | API REST avancée avec Gin | `gin-gonic/gin`, middlewares (logger, auth), `binding:"required"`, groupes de routes, versioning API |
+| `TP/tp_13_exo_5c/` | Sérialisation JSON et struct tags | `encoding/json`, struct tags, `omitempty`, `json:"-"`, `Marshal`/`Unmarshal`, custom `Marshaler` |
 
 ## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
 
@@ -32,6 +33,26 @@ Non. Les goroutines s'exécutent en concurrence avec des durées aléatoires, do
 
 **Exercice 4 — Comment le nombre de travailleurs affecte-t-il le temps total ?**
 Les tâches sont réparties entre les 3 travailleurs. L'ordre de traitement dépend de la disponibilité de chaque travailleur. Avec plus de travailleurs, le temps total diminue car davantage de tâches sont traitées en parallèle. Avec 3 travailleurs pour 10 tâches, chacun traite environ 3 à 4 tâches.
+
+## Réponses aux questions du TP 5C (Sérialisation JSON et Struct Tags)
+
+**Exercice 1 — Les clés JSON correspondent-elles aux noms des champs ?**
+Oui, exactement. Sans struct tags, Go utilise le nom du champ tel quel comme clé JSON (`Nom`, `Age`, `Email`, `Actif` avec majuscule). C'est rarement le format souhaité pour une API (on préfère `snake_case` ou `camelCase`).
+
+**Exercice 2 — Effet de `omitempty` et de `json:"-"` ?**
+Le tag `omitempty` fait que `contact_email` est absent du JSON quand `Email == ""`. Le tag `json:"-"` empêche `MotDePasse` d'apparaître dans le JSON, quelle que soit sa valeur, ce qui est essentiel pour ne pas exposer des données sensibles.
+
+**Exercice 3 — Clé inconnue et type incorrect ?**
+Une clé JSON sans champ correspondant dans la struct (ex: `description`) est simplement ignorée par `json.Unmarshal`. Si `unit_price` était une string `"79.99"` au lieu d'un nombre, `Unmarshal` retournerait une erreur de type (`cannot unmarshal string into Go struct field ... of type float64`).
+
+**Exercice 4 — Pourquoi toujours vérifier les erreurs ?**
+Un JSON malformé ou avec des types incorrects peut provoquer des données corrompues ou des zero values silencieuses, menant à des bugs difficiles à diagnostiquer. Vérifier systématiquement les erreurs de `Marshal`/`Unmarshal` garantit la fiabilité du traitement des données.
+
+**Exercice 5 — Questions de réflexion**
+
+*Question 1 (objet imbriqué) :* Pour un champ `publisher_info` contenant un objet, on crée une struct `Editeur` séparée et on l'utilise comme champ dans `Livre` avec le tag `json:"publisher_info,omitempty"`. Utiliser un pointeur (`*Editeur`) permet de distinguer "absent" (`nil`) de "présent mais vide".
+
+*Question 2 (timestamp Unix) :* Pour sérialiser un `time.Time` en timestamp Unix, on crée un type personnalisé (`UnixTime`) qui implémente les interfaces `json.Marshaler` et `json.Unmarshaler`. `MarshalJSON` retourne `t.Unix()` et `UnmarshalJSON` reconstruit le `Time` depuis le timestamp entier.
 
 ## Autres
 

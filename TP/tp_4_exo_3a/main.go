@@ -36,7 +36,6 @@ func (r Rectangle) Perimeter() float64 {
 	return 2 * (r.Width() + r.Height())
 }
 
-// Pointer receiver: Move modifies the rectangle in place
 func (r *Rectangle) Move(dx, dy float64) {
 	r.Min.X += dx
 	r.Min.Y += dy
@@ -62,7 +61,6 @@ func (c Circle) Circumference() float64 {
 	return 2 * math.Pi * c.Radius
 }
 
-// Pointer receiver: Scale modifies the radius in place
 func (c *Circle) Scale(factor float64) {
 	c.Radius *= factor
 }
@@ -87,7 +85,6 @@ func NewCircle(center Point, radius float64) (Circle, error) {
 
 func main() {
 
-	// Exercise 1
 	fmt.Println("Exercise 1: Point and Rectangle")
 
 	p1 := Point{X: 1, Y: 2}
@@ -111,7 +108,6 @@ func main() {
 	fmt.Println(rect)
 	fmt.Printf("New Min: (%.2f, %.2f), New Max: (%.2f, %.2f)\n", rect.Min.X, rect.Min.Y, rect.Max.X, rect.Max.Y)
 
-	// Exercise 2
 	fmt.Println("\nExercise 2: Circle")
 
 	circle := Circle{Center: Point{X: 3, Y: 4}, Radius: 5}
@@ -126,7 +122,6 @@ func main() {
 	fmt.Printf("Area: %.4f\n", circle.Area())
 	fmt.Printf("Circumference: %.4f\n", circle.Circumference())
 
-	// Exercise 3
 	fmt.Println("\nExercise 3: Constructors with validation")
 
 	r, err := NewRectangle(Point{X: 0, Y: 0}, Point{X: 4, Y: 3})
@@ -153,7 +148,6 @@ func main() {
 		fmt.Println("Invalid circle:", err)
 	}
 
-	// Exercise 3.3: Reflection on receivers
 	fmt.Println("\nReflection on receivers:")
 	fmt.Println("- Value receiver: the method works on a copy of the struct.")
 	fmt.Println("  Used for Area(), Perimeter(), Width(), Height(), DistanceTo(), Circumference()")

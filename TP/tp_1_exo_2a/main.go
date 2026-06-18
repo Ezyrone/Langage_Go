@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// Constants
+
 const (
 	PI       = 3.14159
 	APP_NAME = "Go Manager"
@@ -20,7 +20,6 @@ const (
 )
 
 func main() {
-	// Exercise 1
 	fmt.Println("Exercise 1")
 
 	var userName string = "Jory"
@@ -33,7 +32,6 @@ func main() {
 	fmt.Println("Connected:", isConnected)
 	fmt.Println("Balance:", accountBalance)
 
-	// Exercise 2
 	fmt.Println("\nExercise 2")
 
 	city := "Grenoble"
@@ -44,7 +42,6 @@ func main() {
 	fmt.Printf("Zip code: %v (type: %T)\n", zipCode, zipCode)
 	fmt.Printf("Discount rate: %v (type: %T)\n", discountRate, discountRate)
 
-	// Exercise 3
 	fmt.Println("\nExercise 3")
 
 	radius := 10.5
@@ -55,7 +52,6 @@ func main() {
 	fmt.Println("Application:", APP_NAME)
 	fmt.Println("Launch year:", LAUNCH_YEAR)
 
-	// Exercise 4
 	fmt.Println("\nExercise 4")
 
 	oldAge := userAge
@@ -68,7 +64,6 @@ func main() {
 	var counter int
 	fmt.Printf("counter (uninitialized): %d (zero value of int = 0)\n", counter)
 
-	// Bonus
 	fmt.Println("\nBonus")
 
 	var a, b, c int = 1, 2, 3
