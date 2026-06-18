@@ -15,6 +15,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `TP/tp_7_exo_4c/` | Goroutines et synchronisation (DS) | Goroutines, `sync.WaitGroup`, canaux (`chan`), pool de travailleurs, concurrence |
 | `TP/tp_8_exo_4d/` | Gestion d'événements avec `select` | `select`, channels multiples, `time.NewTicker`, goroutines productrices, arrêt propre |
 | `TP/tp_9_exo_4e/` | Mutex et WaitGroup | `sync.Mutex`, `sync.WaitGroup`, race conditions, `sync/atomic`, sections critiques |
+| `TP/tp_10_exo_4f/` | Context, annulation et timeout | `context.WithTimeout`, `context.WithCancel`, `ctx.Done()`, `ctx.Err()`, arrêt propre |
 
 ## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
 
