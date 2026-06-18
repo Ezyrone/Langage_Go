@@ -19,6 +19,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `TP/tp_11_exo_5a/` | API REST avec `net/http` | `http.ServeMux`, handlers, CRUD en mémoire, `encoding/json`, `github.com/google/uuid` |
 | `TP/tp_12_exo_5b/` | API REST avancée avec Gin | `gin-gonic/gin`, middlewares (logger, auth), `binding:"required"`, groupes de routes, versioning API |
 | `TP/tp_13_exo_5c/` | Sérialisation JSON et struct tags | `encoding/json`, struct tags, `omitempty`, `json:"-"`, `Marshal`/`Unmarshal`, custom `Marshaler` |
+| `TP/tp_14_exo_5d/` | Accès aux bases de données | `database/sql`, `sqlx`, GORM, SQLite, CRUD, ORM, auto-migration |
 
 ## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
 
@@ -53,6 +54,67 @@ Un JSON malformé ou avec des types incorrects peut provoquer des données corro
 *Question 1 (objet imbriqué) :* Pour un champ `publisher_info` contenant un objet, on crée une struct `Editeur` séparée et on l'utilise comme champ dans `Livre` avec le tag `json:"publisher_info,omitempty"`. Utiliser un pointeur (`*Editeur`) permet de distinguer "absent" (`nil`) de "présent mais vide".
 
 *Question 2 (timestamp Unix) :* Pour sérialiser un `time.Time` en timestamp Unix, on crée un type personnalisé (`UnixTime`) qui implémente les interfaces `json.Marshaler` et `json.Unmarshaler`. `MarshalJSON` retourne `t.Unix()` et `UnmarshalJSON` reconstruit le `Time` depuis le timestamp entier.
+
+## Réponses aux questions du TP 5D (Accès aux Bases de Données)
+
+### Comparaison des trois approches
+
+#### database/sql (package standard)
+
+**Avantages :**
+- Fait partie de la bibliothèque standard Go, aucune dépendance supplémentaire (hormis le driver).
+- Contrôle total sur les requêtes SQL écrites.
+- Léger et performant, pas de couche d'abstraction.
+- Interface stable et bien documentée.
+
+**Inconvénients :**
+- Mapping manuel des colonnes vers les champs de struct via `rows.Scan()` — verbeux et source d'erreurs si l'ordre des colonnes change.
+- Le code de lecture (`Query` + boucle `rows.Next()` + `Scan`) est répétitif.
+- Pas de vérification à la compilation du mapping colonnes/struct.
+
+**Quand l'utiliser :** Projets simples, microservices avec peu de requêtes, ou quand on veut un contrôle maximal sur le SQL sans dépendance externe.
+
+#### sqlx
+
+**Avantages :**
+- Extension directe de `database/sql` (compatible à 100%).
+- `db.Select()` et `db.Get()` mappent automatiquement les résultats vers des structs grâce aux tags `db:"..."`.
+- Élimine le code de scan répétitif — le code est plus concis et lisible.
+- Pas de magie : on écrit toujours du SQL pur, donc on garde le contrôle.
+
+**Inconvénients :**
+- Dépendance externe (bien que très légère et stable).
+- Toujours besoin d'écrire les requêtes SQL à la main.
+- Pas de génération automatique de schéma ou de migrations.
+
+**Quand l'utiliser :** La majorité des projets Go en production. C'est le meilleur compromis entre contrôle SQL et ergonomie du code.
+
+#### GORM
+
+**Avantages :**
+- ORM complet : pas besoin d'écrire de SQL pour les opérations courantes.
+- `AutoMigrate` crée et met à jour les tables automatiquement à partir des structs.
+- API chainable intuitive (`db.Where(...).Find(...)`, etc.).
+- Gestion intégrée des relations, hooks, transactions, soft delete.
+
+**Inconvénients :**
+- Abstraction lourde qui peut masquer les requêtes SQL réellement exécutées.
+- Moins performant pour les requêtes complexes (jointures multiples, sous-requêtes).
+- Courbe d'apprentissage pour les fonctionnalités avancées.
+- Peut générer des requêtes SQL inefficaces si mal utilisé.
+
+**Quand l'utiliser :** Prototypage rapide, applications CRUD classiques, projets où la vitesse de développement prime sur l'optimisation fine des requêtes.
+
+### Différences clés observées dans le code
+
+| Aspect | database/sql | sqlx | GORM |
+|---|---|---|---|
+| Connexion | `sql.Open()` | `sqlx.Open()` | `gorm.Open()` |
+| Création table | SQL manuel | SQL manuel | `AutoMigrate()` |
+| Insert | `db.Exec()` | `db.Exec()` | `db.Create()` |
+| Select all | `Query()` + boucle `Scan()` | `db.Select()` | `db.Find()` |
+| Select one | `QueryRow().Scan()` | `db.Get()` | `db.First()` |
+| Lignes de code pour GetAll | ~12 lignes | ~3 lignes | ~3 lignes |
 
 ## Autres
 
