@@ -12,6 +12,7 @@ Ce dépôt regroupe l'ensemble du cours de Go, les TP et les exercices réalisé
 | `TP/tp_4_exo_3a/` | Structs et méthodes | Structs, méthodes, receivers (valeur vs pointeur), `String()`, constructeurs avec validation, `math` |
 | `TP/tp_5_exo_3b/` | Interfaces et interface vide | Interfaces, implémentation implicite, polymorphisme, `interface{}`, type switch, assertions de type |
 | `TP/tp_6_exo_4a/` | Goroutines et synchronisation | Goroutines, `sync.WaitGroup`, canaux (`chan`), pool de travailleurs, concurrence |
+| `TP/tp_7_exo_4c/` | Goroutines et synchronisation (DS) | Goroutines, `sync.WaitGroup`, canaux (`chan`), pool de travailleurs, concurrence |
 
 ## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
 
