@@ -2,7 +2,11 @@
 
 Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble
 
+---
+
 **Jory GRZESZCZAK** · M2 AL · ESGI Grenoble
+
+---
 
 ## TPs
 
