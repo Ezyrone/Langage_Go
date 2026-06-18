@@ -1,5 +1,10 @@
 # Langage Go - M2
 
+![Go](https://img.shields.io/badge/Go-1.24-00ADD8?logo=go&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)
+![Gin](https://img.shields.io/badge/Gin-Framework-00C7B7)
+![GORM](https://img.shields.io/badge/GORM-ORM-red)
+
 Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble
 
 ---
@@ -29,37 +34,54 @@ Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés d
 
 ## Réponses aux questions du TP 4A (Goroutines et Synchronisation)
 
-**Exercice 1 — Que constatez-vous dans la sortie ?**
-Sans mécanisme de synchronisation, `main()` se termine immédiatement après avoir lancé les goroutines. Le programme s'arrête avant que les goroutines n'aient le temps de finir leur travail. On observe peu ou pas de messages "Tâche terminée", car quand la fonction `main` retourne, toutes les goroutines encore en cours sont tuées.
+> [!NOTE]
+> **Exercice 1 — Que constatez-vous dans la sortie ?**
+>
+> Sans mécanisme de synchronisation, `main()` se termine immédiatement après avoir lancé les goroutines. Le programme s'arrête avant que les goroutines n'aient le temps de finir leur travail. On observe peu ou pas de messages "Tâche terminée", car quand la fonction `main` retourne, toutes les goroutines encore en cours sont tuées.
 
-**Exercice 2 — Le comportement a-t-il changé ?**
-Oui. Grâce à `sync.WaitGroup`, `main()` attend que chaque goroutine appelle `wg.Done()` avant de continuer. Toutes les goroutines terminent désormais leur travail, et le message "Toutes les goroutines ont terminé leur exécution." s'affiche uniquement après la fin de toutes les tâches.
+> [!TIP]
+> **Exercice 2 — Le comportement a-t-il changé ?**
+>
+> Oui. Grâce à `sync.WaitGroup`, `main()` attend que chaque goroutine appelle `wg.Done()` avant de continuer. Toutes les goroutines terminent désormais leur travail, et le message "Toutes les goroutines ont terminé leur exécution." s'affiche uniquement après la fin de toutes les tâches.
 
-**Exercice 3 — L'ordre des résultats correspond-il à l'ordre des IDs ?**
-Non. Les goroutines s'exécutent en concurrence avec des durées aléatoires, donc celle qui finit en premier envoie son résultat en premier dans le canal. L'ordre de lecture des résultats reflète l'ordre de terminaison des goroutines, pas l'ordre de lancement.
+> [!NOTE]
+> **Exercice 3 — L'ordre des résultats correspond-il à l'ordre des IDs ?**
+>
+> Non. Les goroutines s'exécutent en concurrence avec des durées aléatoires, donc celle qui finit en premier envoie son résultat en premier dans le canal. L'ordre de lecture des résultats reflète l'ordre de terminaison des goroutines, pas l'ordre de lancement.
 
-**Exercice 4 — Comment le nombre de travailleurs affecte-t-il le temps total ?**
-Les tâches sont réparties entre les 3 travailleurs. L'ordre de traitement dépend de la disponibilité de chaque travailleur. Avec plus de travailleurs, le temps total diminue car davantage de tâches sont traitées en parallèle. Avec 3 travailleurs pour 10 tâches, chacun traite environ 3 à 4 tâches.
+> [!TIP]
+> **Exercice 4 — Comment le nombre de travailleurs affecte-t-il le temps total ?**
+>
+> Les tâches sont réparties entre les 3 travailleurs. L'ordre de traitement dépend de la disponibilité de chaque travailleur. Avec plus de travailleurs, le temps total diminue car davantage de tâches sont traitées en parallèle. Avec 3 travailleurs pour 10 tâches, chacun traite environ 3 à 4 tâches.
 
 ## Réponses aux questions du TP 5C (Sérialisation JSON et Struct Tags)
 
-**Exercice 1 — Les clés JSON correspondent-elles aux noms des champs ?**
-Oui, exactement. Sans struct tags, Go utilise le nom du champ tel quel comme clé JSON (`Nom`, `Age`, `Email`, `Actif` avec majuscule). C'est rarement le format souhaité pour une API (on préfère `snake_case` ou `camelCase`).
+> [!NOTE]
+> **Exercice 1 — Les clés JSON correspondent-elles aux noms des champs ?**
+>
+> Oui, exactement. Sans struct tags, Go utilise le nom du champ tel quel comme clé JSON (`Nom`, `Age`, `Email`, `Actif` avec majuscule). C'est rarement le format souhaité pour une API (on préfère `snake_case` ou `camelCase`).
 
-**Exercice 2 — Effet de `omitempty` et de `json:"-"` ?**
-Le tag `omitempty` fait que `contact_email` est absent du JSON quand `Email == ""`. Le tag `json:"-"` empêche `MotDePasse` d'apparaître dans le JSON, quelle que soit sa valeur, ce qui est essentiel pour ne pas exposer des données sensibles.
+> [!TIP]
+> **Exercice 2 — Effet de `omitempty` et de `json:"-"` ?**
+>
+> Le tag `omitempty` fait que `contact_email` est absent du JSON quand `Email == ""`. Le tag `json:"-"` empêche `MotDePasse` d'apparaître dans le JSON, quelle que soit sa valeur, ce qui est essentiel pour ne pas exposer des données sensibles.
 
-**Exercice 3 — Clé inconnue et type incorrect ?**
-Une clé JSON sans champ correspondant dans la struct (ex: `description`) est simplement ignorée par `json.Unmarshal`. Si `unit_price` était une string `"79.99"` au lieu d'un nombre, `Unmarshal` retournerait une erreur de type (`cannot unmarshal string into Go struct field ... of type float64`).
+> [!NOTE]
+> **Exercice 3 — Clé inconnue et type incorrect ?**
+>
+> Une clé JSON sans champ correspondant dans la struct (ex: `description`) est simplement ignorée par `json.Unmarshal`. Si `unit_price` était une string `"79.99"` au lieu d'un nombre, `Unmarshal` retournerait une erreur de type (`cannot unmarshal string into Go struct field ... of type float64`).
 
-**Exercice 4 — Pourquoi toujours vérifier les erreurs ?**
-Un JSON malformé ou avec des types incorrects peut provoquer des données corrompues ou des zero values silencieuses, menant à des bugs difficiles à diagnostiquer. Vérifier systématiquement les erreurs de `Marshal`/`Unmarshal` garantit la fiabilité du traitement des données.
+> [!WARNING]
+> **Exercice 4 — Pourquoi toujours vérifier les erreurs ?**
+>
+> Un JSON malformé ou avec des types incorrects peut provoquer des données corrompues ou des zero values silencieuses, menant à des bugs difficiles à diagnostiquer. Vérifier systématiquement les erreurs de `Marshal`/`Unmarshal` garantit la fiabilité du traitement des données.
 
-**Exercice 5 — Questions de réflexion**
-
-*Question 1 (objet imbriqué) :* Pour un champ `publisher_info` contenant un objet, on crée une struct `Editeur` séparée et on l'utilise comme champ dans `Livre` avec le tag `json:"publisher_info,omitempty"`. Utiliser un pointeur (`*Editeur`) permet de distinguer "absent" (`nil`) de "présent mais vide".
-
-*Question 2 (timestamp Unix) :* Pour sérialiser un `time.Time` en timestamp Unix, on crée un type personnalisé (`UnixTime`) qui implémente les interfaces `json.Marshaler` et `json.Unmarshaler`. `MarshalJSON` retourne `t.Unix()` et `UnmarshalJSON` reconstruit le `Time` depuis le timestamp entier.
+> [!IMPORTANT]
+> **Exercice 5 — Questions de réflexion**
+>
+> *Question 1 (objet imbriqué) :* Pour un champ `publisher_info` contenant un objet, on crée une struct `Editeur` séparée et on l'utilise comme champ dans `Livre` avec le tag `json:"publisher_info,omitempty"`. Utiliser un pointeur (`*Editeur`) permet de distinguer "absent" (`nil`) de "présent mais vide".
+>
+> *Question 2 (timestamp Unix) :* Pour sérialiser un `time.Time` en timestamp Unix, on crée un type personnalisé (`UnixTime`) qui implémente les interfaces `json.Marshaler` et `json.Unmarshaler`. `MarshalJSON` retourne `t.Unix()` et `UnmarshalJSON` reconstruit le `Time` depuis le timestamp entier.
 
 ## Réponses aux questions du TP 5D (Accès aux Bases de Données)
 
