@@ -90,9 +90,6 @@ func main() {
 	}
 	fmt.Println(string(jsonBytes))
 
-	// ========================================
-	// Exercice 2 : Struct Tags
-	// ========================================
 	fmt.Println("\n=== Exercice 2 : Struct Tags ===")
 
 	pAvecEmail := Personne{
@@ -116,9 +113,6 @@ func main() {
 	fmt.Println("\nSans email:")
 	fmt.Println(prettyJSON(pSansEmail))
 
-	// ========================================
-	// Exercice 3 : Désérialisation
-	// ========================================
 	fmt.Println("\n=== Exercice 3 : Désérialisation ===")
 
 	jsonString := `{
@@ -140,9 +134,6 @@ func main() {
 	fmt.Printf("Prix:    %.2f\n", produit.Prix)
 	fmt.Printf("EnStock: %v\n", produit.EnStock)
 
-	// ========================================
-	// Exercice 4 : Gestion des Erreurs
-	// ========================================
 	fmt.Println("\n=== Exercice 4 : Gestion des Erreurs ===")
 
 	malformedJSON := `{
@@ -167,9 +158,6 @@ func main() {
 	err = json.Unmarshal([]byte(wrongTypeJSON), &p3)
 	fmt.Printf("Type incorrect -> Erreur: %v\n", err)
 
-	// ========================================
-	// Exercice 5 : Scénario Complet
-	// ========================================
 	fmt.Println("\n=== Exercice 5A : Sérialisation de Livres ===")
 
 	livre1 := Livre{
