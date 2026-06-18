@@ -1,4 +1,4 @@
-<h1 align="center">Langage Go - M2</h1>
+<h1 align="center">Langage Go - M2 AL ESGI</h1>
 
 <p align="center">Ce repo regroupe l'ensemble du cours de Go, les TP et les exercices réalisés dans le cadre du M2 AL à l'ESGI Grenoble</p>
 
