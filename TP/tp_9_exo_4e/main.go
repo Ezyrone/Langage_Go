@@ -41,7 +41,6 @@ func incrementerCompteurAtomic(wg *sync.WaitGroup) {
 func main() {
 	attendu := nbGoroutines * incrementsParGoroutine
 
-	// === Étape 1 : Sans synchronisation ===
 	fmt.Println("=== Étape 1 : Compteur NON synchronisé ===")
 	compteur = 0
 	var wg1 sync.WaitGroup
@@ -58,7 +57,6 @@ func main() {
 	fmt.Printf("Correct  : %v\n", compteur == attendu)
 	fmt.Printf("Durée    : %v\n", duree1)
 
-	// === Étape 2 : Avec Mutex ===
 	fmt.Println("\n=== Étape 2 : Compteur synchronisé avec Mutex ===")
 	compteur = 0
 	var wg2 sync.WaitGroup
@@ -75,7 +73,6 @@ func main() {
 	fmt.Printf("Correct  : %v\n", compteur == attendu)
 	fmt.Printf("Durée    : %v\n", duree2)
 
-	// === Étape 3 : Avec sync/atomic ===
 	fmt.Println("\n=== Étape 3 : Compteur synchronisé avec sync/atomic ===")
 	compteurAtomic = 0
 	var wg3 sync.WaitGroup
@@ -92,7 +89,6 @@ func main() {
 	fmt.Printf("Correct  : %v\n", compteurAtomic == int64(attendu))
 	fmt.Printf("Durée    : %v\n", duree3)
 
-	// === Comparaison ===
 	fmt.Println("\n=== Comparaison des durées ===")
 	fmt.Printf("Sans synchro : %v\n", duree1)
 	fmt.Printf("Mutex        : %v\n", duree2)

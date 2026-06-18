@@ -6,16 +6,12 @@ import (
 	"time"
 )
 
-// === Exercice 1 : Sérialisation Basique ===
-
 type PersonneV1 struct {
 	Nom   string
 	Age   int
 	Email string
 	Actif bool
 }
-
-// === Exercice 2 : Struct Tags ===
 
 type Personne struct {
 	Nom        string `json:"full_name"`
@@ -25,16 +21,12 @@ type Personne struct {
 	MotDePasse string `json:"-"`
 }
 
-// === Exercice 3 : Désérialisation ===
-
 type Produit struct {
 	ID      int     `json:"product_id"`
 	Nom     string  `json:"item_name"`
 	Prix    float64 `json:"unit_price"`
 	EnStock bool    `json:"in_stock"`
 }
-
-// === Exercice 5 : Scénario Complet ===
 
 type Editeur struct {
 	Name     string `json:"name"`
@@ -82,9 +74,6 @@ func prettyJSON(data interface{}) string {
 }
 
 func main() {
-	// ========================================
-	// Exercice 1 : Sérialisation Basique
-	// ========================================
 	fmt.Println("=== Exercice 1 : Sérialisation Basique ===")
 
 	p1 := PersonneV1{

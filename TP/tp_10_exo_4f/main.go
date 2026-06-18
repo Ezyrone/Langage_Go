@@ -24,7 +24,6 @@ func effectuerOperationLongue(ctx context.Context, id string) error {
 func main() {
 	fmt.Println("Démarrage du programme principal.")
 
-	// === Scénario 1 : Timeout de 2s (l'opération prend 2.5s → timeout) ===
 	fmt.Println("\n=== Scénario 1 : Timeout court (2s) ===")
 
 	ctx1, cancel1 := context.WithTimeout(context.Background(), 2*time.Second)
@@ -47,10 +46,8 @@ func main() {
 		fmt.Printf("Main: Timeout atteint : %v\n", ctx1.Err())
 	}
 
-	// Attendre que la goroutine se termine proprement
 	<-resultChan1
 
-	// === Scénario 2 : Timeout de 3s (l'opération a le temps de finir) ===
 	fmt.Println("\n=== Scénario 2 : Timeout long (3s) ===")
 
 	ctx2, cancel2 := context.WithTimeout(context.Background(), 3*time.Second)
@@ -73,7 +70,6 @@ func main() {
 		fmt.Printf("Main: Timeout atteint : %v\n", ctx2.Err())
 	}
 
-	// === Scénario 3 : Annulation manuelle avec context.WithCancel ===
 	fmt.Println("\n=== Scénario 3 : Annulation manuelle (après 1s) ===")
 
 	ctx3, cancel3 := context.WithCancel(context.Background())

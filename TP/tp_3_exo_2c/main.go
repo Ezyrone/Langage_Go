@@ -95,7 +95,6 @@ func displayInventory(inventory map[int]Product, stock map[int]int) {
 
 func main() {
 
-	// Part 1: Categories (Slices)
 	fmt.Println("PART 1: Slices")
 
 	categories := []string{"Electronics", "Clothing", "Books"}
@@ -115,7 +114,6 @@ func main() {
 	fmt.Println("-> len = current number of elements, cap = size of the underlying array.")
 	fmt.Println("   Capacity doubles when the slice exceeds its capacity during an append.")
 
-	// Part 2: Products and Stock (Maps)
 	fmt.Println("\nPART 2: Maps")
 
 	productInventory := map[int]Product{
@@ -170,7 +168,6 @@ func main() {
 	restockProduct(1, 10, productStock)
 	fmt.Printf("  Restocked 10 Laptops. Stock: %d\n", productStock[1])
 
-	// Part 3: Combination & Performance
 	fmt.Println("\nPART 3: Combination & Performance")
 
 	productInventory[3] = Product{ID: 3, Name: "Soccer Ball", Price: 24.99, Category: "Sports"}
@@ -241,7 +238,6 @@ func main() {
 	fmt.Println("   Iteration is O(n). Pre-allocation reduces insertion time")
 	fmt.Println("   because the map doesn't need to grow dynamically.")
 
-	// Bonus
 	fmt.Println("\nBONUS")
 
 	fmt.Println("Products sorted by price (ascending):")
