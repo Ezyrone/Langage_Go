@@ -16,7 +16,11 @@ type Options struct {
 func Run(ctx context.Context, checker domain.Checker, urls []string, opts Options) domain.Batch {
 	start := time.Now()
 
-	batchCtx, batchCancel := context.WithTimeout(ctx, time.Duration(opts.TimeoutMs)*time.Millisecond)
+	perURL := time.Duration(opts.TimeoutMs) * time.Millisecond
+	waves := (len(urls) + opts.Concurrency - 1) / opts.Concurrency
+	batchTimeout := perURL * time.Duration(waves+1)
+
+	batchCtx, batchCancel := context.WithTimeout(ctx, batchTimeout)
 	defer batchCancel()
 
 	jobs := make(chan string, len(urls))
@@ -28,7 +32,7 @@ func Run(ctx context.Context, checker domain.Checker, urls []string, opts Option
 		go func() {
 			defer wg.Done()
 			for url := range jobs {
-				perURLCtx, perURLCancel := context.WithTimeout(batchCtx, time.Duration(opts.TimeoutMs)*time.Millisecond)
+				perURLCtx, perURLCancel := context.WithTimeout(batchCtx, perURL)
 				r := checker.Check(perURLCtx, url)
 				perURLCancel()
 				results <- r

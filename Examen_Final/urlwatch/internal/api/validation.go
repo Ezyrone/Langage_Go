@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/url"
+	"strconv"
 
 	"github.com/jory/urlwatch/internal/domain"
 	"github.com/jory/urlwatch/internal/pool"
@@ -29,7 +30,7 @@ func validateAndNormalize(req CheckRequest) ([]string, pool.Options, error) {
 		if err != nil || (parsed.Scheme != "http" && parsed.Scheme != "https") {
 			return nil, pool.Options{}, &domain.ValidationError{
 				Field:   "urls",
-				Message: "invalid URL at index " + itoa(i) + ": must be http or https",
+				Message: "invalid URL at index " + strconv.Itoa(i) + ": must be http or https",
 			}
 		}
 	}
