@@ -30,8 +30,8 @@ Le nombre de goroutines est strictement borné par `opts.Concurrency`. Les URLs 
 
 ### Context et timeouts
 
-- Un `context.WithTimeout` global enveloppe tout le traitement du batch.
-- Chaque URL reçoit un `context.WithTimeout` enfant pour un timeout individuel.
+- **Timeout global (batch)** : calculé dynamiquement comme `perURLTimeout × (⌈nURLs/concurrency⌉ + 1)`. Ce calcul laisse assez de temps pour traiter toutes les vagues d'URLs, plus une marge. Un timeout identique au per-URL causerait des expirations prématurées avec beaucoup d'URLs et peu de concurrence.
+- **Timeout per-URL** : chaque URL reçoit un `context.WithTimeout` enfant du context batch, borné par `timeout_ms` configuré par le client.
 - Le `MockChecker` écoute `ctx.Done()` pour simuler une annulation, ce qui est testé dans `TestRun_RespectsContext_Cancellation`.
 
 ### Fuites de goroutines
