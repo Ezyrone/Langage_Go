@@ -82,6 +82,17 @@ Un JSON malformé ou avec des types incorrects peut provoquer des données corro
 | Select one | `QueryRow().Scan()` | `db.Get()` | `db.First()` |
 | Lignes de code pour GetAll | ~12 lignes | ~3 lignes | ~3 lignes |
 
+<h2 align="center">Examen Final</h2>
+
+L'examen final se trouve dans le dossier [`Examen_Final/urlwatch/`](Examen_Final/urlwatch/). Il s'agit d'un microservice Go complet nommé **URLWatch** (vérification d'URLs en masse avec worker pool concurrent, API REST, logging structuré).
+
+Le dossier contient tout le nécessaire :
+- Le code source (arborescence `cmd/` + `internal/`)
+- [`README.md`](Examen_Final/urlwatch/README.md) — instructions build / run / test + exemples curl
+- [`DESIGN.md`](Examen_Final/urlwatch/DESIGN.md) — justification architecturale (découpage, concurrence, erreurs, choix stdlib)
+- [`JOURNAL_IA.md`](Examen_Final/urlwatch/JOURNAL_IA.md) — traçabilité de l'usage de l'IA
+
+
 <h2 align="center">Autres</h2>
 
 - `training_exo_1/` — Brouillons et tests perso (hello world, module greetings, etc.)
