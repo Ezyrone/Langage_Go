@@ -146,6 +146,27 @@ func TestHealthz(t *testing.T) {
 	}
 }
 
+func TestPostChecks_MethodNotAllowed(t *testing.T) {
+	router := setupTestRouter()
+
+	req := httptest.NewRequest(http.MethodGet, "/v1/checks", nil)
+	rec := httptest.NewRecorder()
+
+	router.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusMethodNotAllowed {
+		t.Fatalf("status = %d, want %d", rec.Code, http.StatusMethodNotAllowed)
+	}
+
+	var errBody ErrorBody
+	if err := json.NewDecoder(rec.Body).Decode(&errBody); err != nil {
+		t.Fatalf("decode error: %v", err)
+	}
+	if errBody.Error.Code != "method_not_allowed" {
+		t.Errorf("error code = %q, want %q", errBody.Error.Code, "method_not_allowed")
+	}
+}
+
 func TestPostChecks_ValidationConcurrency(t *testing.T) {
 	router := setupTestRouter()
 
